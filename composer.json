@@ -2,5 +2,12 @@
   "require": {
     "silex/silex": "~1.2",
     "wildbit/postmark-php": "~1.0"
-  }
+  },
+    "extra": {
+        "heroku": {
+            "framework": "silex",
+            "document-root": "web",
+            "index-document": "index.php"
+        }
+    }
 }
