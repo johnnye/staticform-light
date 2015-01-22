@@ -13,10 +13,11 @@ $app['debug'] = true;
 
 $app->post('/api/{email}', function (App $app, Request $request, $email) {
 
+    $returnURL = $request->headers->get('Referer');
     if ($email === urldecode('support@oktiptop.com')) {
         $email = urldecode($email);
     } else {
-        return new Response('OK', 200);
+        return new \Symfony\Component\HttpFoundation\RedirectResponse($returnURL);
     }
 
     $client = new PostmarkClient('933e451c-c708-4379-ae9a-6db649b219d4');
@@ -38,10 +39,10 @@ $app->post('/api/{email}', function (App $app, Request $request, $email) {
                 "Work Journal Support",
                 $bodyContent);
         } catch (Exception $e) {
-            return new Response($e->getMessage(), 503);
+            return new \Symfony\Component\HttpFoundation\RedirectResponse($returnURL);
         }
     }
-    return new Response('OK', 200);
+    return new \Symfony\Component\HttpFoundation\RedirectResponse($returnURL);
 });
 
 $app->get('/', function(){
