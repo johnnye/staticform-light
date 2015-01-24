@@ -8,8 +8,11 @@ use Silex\Application as App;
 use Postmark\PostmarkClient;
 
 $app = new App();
-Dotenv::load(__DIR__);
+
 $app['debug'] = getenv('DEVELOPMENT');
+if ($app['debug']) {
+    Dotenv::load('__DIR__');
+}
 
 $app->post('/api/{email}', function (App $app, Request $request, $email) {
 
