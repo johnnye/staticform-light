@@ -10,6 +10,7 @@ use Postmark\PostmarkClient;
 $app = new App();
 
 $app['debug'] = getenv('DEVELOPMENT');
+
 if ($app['debug']) {
     Dotenv::load('__DIR__');
 }
@@ -48,7 +49,6 @@ $app->post('/api/{email}', function (App $app, Request $request, $email) {
 });
 
 $app->get('/', function(){
-    var_dump($_ENV);
     return new Response();
 });
 
@@ -74,6 +74,6 @@ function returnValue($returnURL)
     if(!is_null($returnURL)) {
         return new \Symfony\Component\HttpFoundation\RedirectResponse($returnURL);
     }
-    //Otherwise, stiffen the upperlip and pretend it's all ok to the spammers
+    //Otherwise, stiffen the upper lip and pretend it's all ok to the spammers
     return new Response('OK', 200);
 }
