@@ -33,7 +33,6 @@ $app->post('/api/{email}', function (App $app, Request $request, $email) {
             'HtmlBody'  => $bodyContent,
             //'TrackOpens' => true
         ];
-        var_dump($message);
         try {
             $sendResult = $client->sendEmailBatch([$message]);
             //TODO: do something with the response
@@ -46,6 +45,7 @@ $app->post('/api/{email}', function (App $app, Request $request, $email) {
 });
 
 $app->get('/', function(){
+    var_dump($_ENV);
     return new Response();
 });
 
