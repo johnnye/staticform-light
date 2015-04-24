@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +15,7 @@ if ($app['debug']) {
     Dotenv::load('__DIR__');
 }
 
-$app->post('/api/{email}', function (App $app, Request $request, $email) {
+$app->post('/api/{email}', function(App $app, Request $request, $email) {
 
     $returnURL = $request->headers->get('Referer');
     if ($email !== urldecode(getenv('TO_ADDRESS'))) {
@@ -32,7 +32,7 @@ $app->post('/api/{email}', function (App $app, Request $request, $email) {
         $message = [
             'From'      => getenv('FROM_ADDRESS'),
             'To'        => getenv('TO_ADDRESS'),
-            'ReplyTo'   => '\"'.$input['name'].'\" <'.$input['email'] .'>',
+            'ReplyTo'   => '\"'.$input['name'].'\" <'.$input['email'].'>',
             'Subject'   => getenv('SUBJECT_LINE'),
             'HtmlBody'  => $bodyContent,
             //'TrackOpens' => true
@@ -48,7 +48,7 @@ $app->post('/api/{email}', function (App $app, Request $request, $email) {
     return returnValue($returnURL);
 });
 
-$app->get('/', function(){
+$app->get('/', function() {
     return new Response();
 });
 
@@ -58,8 +58,8 @@ function build_email_body($input)
 {
     $body = '<html><body>';
 
-    foreach($input as $field => $value) {
-        if($field !== getenv('HONEYPOT_NAME')) {
+    foreach ($input as $field => $value) {
+        if ($field !== getenv('HONEYPOT_NAME')) {
             $body .= "<p><b>$field: </b>$value</p>";
         }
     }
@@ -71,7 +71,7 @@ function build_email_body($input)
 function returnValue($returnURL)
 {
     //Where possible redirect to the original page
-    if(!is_null($returnURL)) {
+    if (!is_null($returnURL)) {
         return new \Symfony\Component\HttpFoundation\RedirectResponse($returnURL);
     }
     //Otherwise, stiffen the upper lip and pretend it's all ok to the spammers
